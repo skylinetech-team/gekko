@@ -41,3 +41,24 @@ Gekko has [a forum](https://forum.gekko.wizb.it/) that is the place for discussi
 ## Final
 
 If Gekko helped you in any way, you can always leave me a tip at (BTC) 13r1jyivitShUiv9FJvjLH7Nh1ZZptumwW
+
+## to continue mike's journey
+
+We have forked a development branch from [Mike's Great Gekko](https://github.com/askmike/gekko).
+
+here's the extra 2 steps to do after you following [the installing Gekko doc](https://gekko.wizb.it/docs/installation/installing_gekko.html) above:
+
+1. update market files meta data by running the following commands at [Gekko Installed Exchange Market Files Folder] (https://github.com/skylinetech-team/gekko/tree/develop/exchange/util/genMarketFiles)
+
+node update-binance.js
+node update-bitfinex.js
+node update-coinbase.js
+node update-coinfalcon.js
+node update-kraken.js
+
+2. install the dependent modules to facilitae deep learning based algorithms developments on Gekko
+
+npm install convnetjs mathjs
+
+3. start Gekko
+
