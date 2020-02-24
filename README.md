@@ -48,12 +48,16 @@ We have forked a development branch from [Mike's Great Gekko](https://github.com
 
 here's the extra 2 steps to do after you following [the installing Gekko doc](https://gekko.wizb.it/docs/installation/installing_gekko.html) above:
 
-1. update market files meta data by running the following commands at [Gekko Installed Exchange Market Files Folder] (https://github.com/skylinetech-team/gekko/tree/develop/exchange/util/genMarketFiles)
+1. update market files meta data by running the following commands at [the Gekko installed exchange market files folder](https://github.com/skylinetech-team/gekko/tree/develop/exchange/util/genMarketFiles) .
 
 node update-binance.js
+
 node update-bitfinex.js
+
 node update-coinbase.js
+
 node update-coinfalcon.js
+
 node update-kraken.js
 
 2. install the dependent modules to facilitae deep learning based algorithms developments on Gekko
