@@ -19,11 +19,14 @@ import newGekko from './components/gekko/new.vue'
 import singleGekko from './components/gekko/singleGekko.vue'
 import { connect as connectWS } from './components/global/ws'
 
+import login from './components/login/login'
+
 const router = new VueRouter({
   mode: 'hash',
   base: __dirname,
   routes: [
-    { path: '/', redirect: '/home' },
+    { path: '/', redirect: '/login' },
+    { path: '/login', component: login },
     { path: '/home', component: home },
     { path: '/backtest', component: backtester },
     { path: '/config', component: config },
