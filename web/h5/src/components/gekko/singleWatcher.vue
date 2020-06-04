@@ -1,38 +1,53 @@
-<template lang='pug'>
-  div.my2
-    .contain(v-if='!data')
-      h1 Unknown Watcher
-      p Gekko doesn't know what whatcher this is...
-    div(v-if='data')
-      h2.contain Market Watcher
-      .grd.contain
-        h3 Market
-        .grd-row
-          .grd-row-col-2-6 Exchange
-          .grd-row-col-4-6 {{ data.watch.exchange }}
-        .grd-row
-          .grd-row-col-2-6 Currency
-          .grd-row-col-4-6 {{ data.watch.currency }}
-        .grd-row
-          .grd-row-col-2-6 Asset
-          .grd-row-col-4-6 {{ data.watch.asset }}
-        h3 Statistics
-        spinner(v-if='isLoading')
-        template(v-if='!isLoading')
-          .grd-row(v-if='data.firstCandle')
-            .grd-row-col-2-6 Watching since
-            .grd-row-col-4-6 {{ fmt(data.firstCandle.start) }}
-          .grd-row(v-if='data.lastCandle')
-            .grd-row-col-2-6 Received data until
-            .grd-row-col-4-6 {{ fmt(data.lastCandle.start) }}
-          .grd-row(v-if='data.lastCandle && data.firstCandle')
-            .grd-row-col-2-6 Data spanning
-            .grd-row-col-4-6 {{ humanizeDuration(moment(data.lastCandle.start).diff(moment(data.firstCandle.start))) }}
-      template(v-if='!isLoading')
-        h3.contain Market graph
-        spinner(v-if='candleFetch === "fetching"')
-        template(v-if='candles.length')
-          chart(:data='chartData', :height='500')
+<template >
+  <div class="my2">
+    <div class="contain" v-if="!data">
+      <h1>Unknown Watcher</h1>
+      <p>Gekko doesn't know what whatcher this is...</p>
+    </div>
+    <div v-if="data">
+      <h2 class="contain">Market Watcher</h2>
+      <div class="grd contain">
+        <h3>Market</h3>
+        <div class="grd-row">
+          <div class="grd-row-col-2-6">Exchange</div>
+          <div class="grd-row-col-4-6">{{ data.watch.exchange }}</div>
+        </div>
+        <div class="grd-row">
+          <div class="grd-row-col-2-6">Currency</div>
+          <div class="grd-row-col-4-6">{{ data.watch.currency }}</div>
+        </div>
+        <div class="grd-row">
+          <div class="grd-row-col-2-6">Asset</div>
+          <div class="grd-row-col-4-6">{{ data.watch.asset }}</div>
+        </div>
+        <h3>Statistics</h3>
+        <spinner v-if="isLoading"></spinner>
+        <template v-if="!isLoading">
+          <div class="grd-row" v-if="data.firstCandle">
+            <div class="grd-row-col-2-6">Watching since</div>
+            <div class="grd-row-col-4-6">{{ fmt(data.firstCandle.start) }}</div>
+          </div>
+          <div class="grd-row" v-if="data.lastCandle">
+            <div class="grd-row-col-2-6">Received data until</div>
+            <div class="grd-row-col-4-6">{{ fmt(data.lastCandle.start) }}</div>
+          </div>
+          <div class="grd-row" v-if="data.lastCandle && data.firstCandle">
+            <div class="grd-row-col-2-6">Data spanning</div>
+            <div
+              class="grd-row-col-4-6"
+            >{{ humanizeDuration(moment(data.lastCandle.start).diff(moment(data.firstCandle.start))) }}</div>
+          </div>
+        </template>
+      </div>
+      <template v-if="!isLoading">
+        <h3 class="contain">Market graph</h3>
+        <spinner v-if="candleFetch === 'fetching'"></spinner>
+        <template v-if="candles.length">
+          <chart :data="chartData" :height="500"></chart>
+        </template>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script>

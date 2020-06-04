@@ -1,12 +1,16 @@
-<template lang='pug'>
-div
-  h3 Type
-  template
-    label(for='type').wrapper What do you want to do with gekko?
-    form.radio.grd
-      div.grd-row(v-for='(type, i) in types').m1
-        input.grd-row-col-1-6(type='radio', :value='i', v-model='selectedTypeIndex')
-        label.grd-row-col-5-6(:for='i') {{ type }}
+<template >
+  <div>
+    <h3>Type</h3>
+    <template>
+      <label class="wrapper" for="type">What do you want to do with gekko?</label>
+      <form class="radio grd">
+        <div class="grd-row m1" v-for="(type, i) in types" :key="i">
+          <input class="grd-row-col-1-6" type="radio" :value="i" v-model="selectedTypeIndex" />
+          <label class="grd-row-col-5-6" :for="i">{{ type }}</label>
+        </div>
+      </form>
+    </template>
+  </div>
 </template>
 
 <script>

@@ -1,11 +1,11 @@
-// http://tobiasahlin.com/spinkit/
 
-<template lang='pug'>
-.spinner
-  .rect1
-  .rect2
-  .rect3
-  .rect4
+<template >
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+  </div>
 </template>
 
 <script>

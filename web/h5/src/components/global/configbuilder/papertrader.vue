@@ -1,12 +1,23 @@
-<template lang='pug'>
-.grd
-  .px1
-    h3 Paper trader
-    a.btn--primary(href='#', v-on:click.prevent='switchToggle', v-if='toggle === "closed"') Change paper trader settings
-    template(v-if='toggle === "open"')
-      p Settings:
-      textarea.params(v-model='rawPaperTraderParams')
-      p.bg--red.p1(v-if='rawPaperTraderParamsError') {{ rawPaperTraderParamsError.message }}
+<template >
+  <div class="grd">
+    <div class="px1">
+      <h3>Paper trader</h3>
+      <a
+        class="btn--primary"
+        href="#"
+        v-on:click.prevent="switchToggle"
+        v-if="toggle === 'closed'"
+      >Change paper trader settings</a>
+      <template v-if="toggle === 'open'">
+        <p>Settings:</p>
+        <textarea class="params" v-model="rawPaperTraderParams"></textarea>
+        <p
+          class="bg--red p1"
+          v-if="rawPaperTraderParamsError"
+        >{{ rawPaperTraderParamsError.message }}</p>
+      </template>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,21 +1,32 @@
-<template lang='pug'>
-div
-  .mx1
-    label(for='exchange').wrapper Exchange:
-    .custom-select.button
-      select(v-model='exchange')
-        option(v-for='(market, e) in exchanges') {{ e }}
-  .grd-row
-    .grd-row-col-3-6.mx1
-      label(for='currency') Currency:
-      .custom-select.button
-        select(v-model='currency')
-          option(v-for='cur in currencies') {{ cur }}
-    .grd-row-col-3-6.mx1
-      label(for='asset') Asset:
-      .custom-select.button
-        select(v-model='asset')
-          option(v-for='asst in assets') {{ asst }}
+<template >
+  <div>
+    <div class="mx1">
+      <label class="wrapper" for="exchange">Exchange:</label>
+      <div class="custom-select button">
+        <select v-model="exchange">
+          <option v-for="(market, e) in exchanges" :key="e">{{ e }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="grd-row">
+      <div class="grd-row-col-3-6 mx1">
+        <label for="currency">Currency:</label>
+        <div class="custom-select button">
+          <select v-model="currency">
+            <option v-for="cur in currencies" :key="cur">{{ cur }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="grd-row-col-3-6 mx1">
+        <label for="asset">Asset:</label>
+        <div class="custom-select button">
+          <select v-model="asset">
+            <option v-for="asst in assets" :key="asst">{{ asst }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

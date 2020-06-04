@@ -24,16 +24,6 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true,
             component: () => import('@/components/gekko/list'),
             meta: { title: 'Live Gekkos', keepAlive: false, permission: ['dashboard'] }
-          },
-          {
-            path: '/live-gekkos/new',
-            hideChildrenInMenu: true,
-            component: () => import('@/components/gekko/new')
-          },
-          {
-            path: '/live-gekkos/:id',
-            hideChildrenInMenu: true,
-            component: () => import('@/components/gekko/singleGekko')
           }
         ]
       },
@@ -67,18 +57,6 @@ export const asyncRouterMap = [
             hideChildrenInMenu: true,
             component: () => import('@/components/data/data'),
             meta: { title: 'Local Data', keepAlive: true, permission: ['table'] }
-          },
-          {
-            path: '/data/importer',
-            name: 'importer',
-            component: () => import('@/components/data/import/importer'),
-            hideChildrenInMenu: true
-          },
-          {
-            path: '/data/importer/import/:id',
-            name: 'importerDetail',
-            component: () => import('@/components/data/import/single'),
-            hideChildrenInMenu: true
           }
         ]
       },
@@ -108,6 +86,32 @@ export const asyncRouterMap = [
   },
   {
     path: '*', redirect: '/404', hidden: true
+  },
+  {
+    path: '/hiddenview',
+    name: 'index',
+    component: BasicLayout,
+    hidden: true,
+    children: [
+      {
+        path: '/live-gekkos/new',
+        component: () => import('@/components/gekko/new')
+      },
+      {
+        path: '/live-gekkos/:id',
+        component: () => import('@/components/gekko/singleGekko')
+      },
+      {
+        path: '/data/importer',
+        name: 'importer',
+        component: () => import('@/components/data/import/importer')
+      },
+      {
+        path: '/data/importer/import/:id',
+        name: 'importerDetail',
+        component: () => import('@/components/data/import/single')
+      }
+    ]
   }
 ]
 

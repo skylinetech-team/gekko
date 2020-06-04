@@ -1,19 +1,29 @@
-<template lang='pug'>
-div.contain
-  h2 Config
-  .hr
-  h3 Available API keys
-  p(v-if='!apiKeySets.length')
-    em You don't have any API keys yet.
-  ul
-    li(v-for='exchange in apiKeySets') {{ exchange }} (
-      a(href='#', v-on:click.prevent='removeApiKey(exchange)') remove
-      | )
-  a.btn--primary(href='#', v-if='!addApiToggle', v-on:click.prevent='openAddApi') Add an API key
-  template(v-if='addApiToggle')
-    .hr
-    apiConfigBuilder
-  .hr
+<template>
+  <div class="contain">
+    <h2>Config</h2>
+    <div class="hr"></div>
+    <h3>Available API keys</h3>
+    <p v-if="!apiKeySets.length">
+      <em>You don't have any API keys yet.</em>
+    </p>
+    <ul>
+      <li v-for="exchange in apiKeySets" :key="exchange">
+        {{ exchange }} (
+        <a href="#" v-on:click.prevent="removeApiKey(exchange)">remove</a>)
+      </li>
+    </ul>
+    <a
+      class="btn--primary"
+      href="#"
+      v-if="!addApiToggle"
+      v-on:click.prevent="openAddApi"
+    >Add an API key</a>
+    <template v-if="addApiToggle">
+      <div class="hr"></div>
+      <api-config-builder></api-config-builder>
+    </template>
+    <div class="hr"></div>
+  </div>
 </template>
 
 <script>

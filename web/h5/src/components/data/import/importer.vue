@@ -1,19 +1,24 @@
-<template lang='pug'>
-  div.contain.my2
-    div.text(v-html='intro')
-    .hr
-    h3 Currently running imports
-    p(v-if='imports.length === 0') You currently don't have any imports running.
-    ul(v-if='imports.length')
-      li(v-for='_import in imports')
-        router-link(:to='"/data/importer/import/" + _import.id') {{ _import.watch.exchange }}:{{ _import.watch.currency }}/{{ _import.watch.asset }}
-
-    .hr
-    h3 Start a new import
-    import-config-builder(v-on:config='updateConfig')
-    .hr
-    .txt--center
-      a.w100--s.my1.btn--primary(href='#', v-on:click.prevent='run') Import
+<template>
+  <div class="contain my2">
+    <div class="text" v-html="intro"></div>
+    <div class="hr"></div>
+    <h3>Currently running imports</h3>
+    <p v-if="imports.length === 0">You currently don't have any imports running.</p>
+    <ul v-if="imports.length">
+      <li v-for="_import in imports" :key="_import">
+        <router-link
+          :to="'/data/importer/import/' + _import.id"
+        >{{ _import.watch.exchange }}:{{ _import.watch.currency }}/{{ _import.watch.asset }}</router-link>
+      </li>
+    </ul>
+    <div class="hr"></div>
+    <h3>Start a new import</h3>
+    <import-config-builder v-on:config="updateConfig"></import-config-builder>
+    <div class="hr"></div>
+    <div class="txt--center">
+      <a class="w100--s my1 btn--primary" href="#" v-on:click.prevent="run">Import</a>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-const reduceState = require('../../../../../state/reduceState')
+import reduce from '@/store/reduceState'
 
 export const syncGekkos = (state, data) => {
   if (!data) {
@@ -26,7 +26,7 @@ export const updateGekko = (state, update) => {
 
   state.gekkos = {
     ...state.gekkos,
-    [update.id]: reduceState(state.gekkos[update.id], update.event)
+    [update.id]: reduce(state.gekkos[update.id], update.event)
   }
   return state
 }

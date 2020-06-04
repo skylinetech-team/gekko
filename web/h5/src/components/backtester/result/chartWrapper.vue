@@ -1,7 +1,8 @@
-<template lang='pug'>
-#chartWrapper(v-bind:class='{ clickable: !isClicked }')
-  .shield(v-on:click.prevent='click')
-  svg#chart(width='960', :height='height')
+<template >
+  <div id="chartWrapper" v-bind:class="{ clickable: !isClicked }">
+    <div class="shield" v-on:click.prevent="click"></div>
+    <svg id="chart" width="960" :height="height" />
+  </div>
 </template>
 
 <script>

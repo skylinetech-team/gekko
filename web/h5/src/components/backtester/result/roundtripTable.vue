@@ -1,30 +1,38 @@
-<template lang='pug'>
-  .contain.roundtrips
-    h2 Roundtrips
-    table(v-if='roundtrips.length')
-      thead
-        tr
-          th Entry at (UTC)
-          th Exit at (UTC)
-          th Exposure
-          th Entry balance
-          th Exit balance
-          th P&amp;L
-          th Profit
-        tr(v-for='rt in roundtrips')
-          td {{ fmt(rt.entryAt) }}
-          td {{ fmt(rt.exitAt) }}
-          td {{ diff(rt.duration) }}
-          td {{ round(rt.entryBalance) }}
-          td {{ round(rt.exitBalance) }}
-          template(v-if="Math.sign(rt.pnl)===-1")
-            td.loss {{ Math.sign(rt.pnl)*rt.pnl.toFixed(2) }}
-            td.loss {{ rt.profit.toFixed(2) }}%
-          template(v-else)
-            td.profit {{ rt.pnl.toFixed(2) }}
-            td.profit {{ rt.profit.toFixed(2) }}%
-    div(v-if='!roundtrips.length')
-      p Not enough data to display
+<template >
+  <div class="contain roundtrips">
+    <h2>Roundtrips</h2>
+    <table v-if="roundtrips.length">
+      <thead>
+        <tr>
+          <th>Entry at (UTC)</th>
+          <th>Exit at (UTC)</th>
+          <th>Exposure</th>
+          <th>Entry balance</th>
+          <th>Exit balance</th>
+          <th>P&L</th>
+          <th>Profit</th>
+        </tr>
+        <tr v-for="rt in roundtrips" :key="rt">
+          <td>{{ fmt(rt.entryAt) }}</td>
+          <td>{{ fmt(rt.exitAt) }}</td>
+          <td>{{ diff(rt.duration) }}</td>
+          <td>{{ round(rt.entryBalance) }}</td>
+          <td>{{ round(rt.exitBalance) }}</td>
+          <template v-if="Math.sign(rt.pnl)===-1">
+            <td class="loss">{{ Math.sign(rt.pnl)*rt.pnl.toFixed(2) }}</td>
+            <td class="loss">{{ rt.profit.toFixed(2) }}%</td>
+          </template>
+          <template v-else>
+            <td class="profit">{{ rt.pnl.toFixed(2) }}</td>
+            <td class="profit">{{ rt.profit.toFixed(2) }}%</td>
+          </template>
+        </tr>
+      </thead>
+    </table>
+    <div v-if="!roundtrips.length">
+      <p>Not enough data to display</p>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,11 +1,18 @@
-<template lang='pug'>
-  div.contain.my2
-    h3 Start a new gekko
-    gekko-config-builder(v-on:config='updateConfig')
-    .hr
-    .txt--center(v-if='config.valid')
-      a.w100--s.my1.btn--primary(href='#', v-on:click.prevent='start', v-if="!pendingStratrunner") Start
-      spinner(v-if='pendingStratrunner')
+<template >
+  <div class="contain my2">
+    <h3>Start a new gekko</h3>
+    <gekko-config-builder v-on:config="updateConfig"></gekko-config-builder>
+    <div class="hr"></div>
+    <div class="txt--center" v-if="config.valid">
+      <a
+        class="w100--s my1 btn--primary"
+        href="#"
+        v-on:click.prevent="start"
+        v-if="!pendingStratrunner"
+      >Start</a>
+      <spinner v-if="pendingStratrunner"></spinner>
+    </div>
+  </div>
 </template>
 
 <script>

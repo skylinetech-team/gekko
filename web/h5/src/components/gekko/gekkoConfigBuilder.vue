@@ -1,16 +1,21 @@
-<template lang='pug'>
-.grd.contain
-  .grd-row
-    .grd-row-col-3-6.mx1
-      h3 Market
-      market-picker(v-on:market='updateMarketConfig', :only-tradable='isTradebot')
-    .grd-row-col-3-6.mx1
-      type-picker(v-on:type='updateType')
-  template(v-if='type !== "market watcher"')
-    .hr
-    strat-picker.contain.my2(v-on:stratConfig='updateStrat')
-    .hr(v-if='type === "paper trader"')
-    paper-trader(v-on:settings='updatePaperTrader', v-if='type === "paper trader"')
+<template >
+  <div class="grd contain">
+    <div class="grd-row">
+      <div class="grd-row-col-3-6 mx1">
+        <h3>Market</h3>
+        <market-picker v-on:market="updateMarketConfig" :only-tradable="isTradebot"></market-picker>
+      </div>
+      <div class="grd-row-col-3-6 mx1">
+        <type-picker v-on:type="updateType"></type-picker>
+      </div>
+    </div>
+    <template v-if="type !== 'market watcher'">
+      <div class="hr"></div>
+      <strat-picker class="contain my2" v-on:stratConfig="updateStrat"></strat-picker>
+      <div class="hr" v-if="type === 'paper trader'"></div>
+      <paper-trader v-on:settings="updatePaperTrader" v-if="type === 'paper trader'"></paper-trader>
+    </template>
+  </div>
 </template>
 
 <script>

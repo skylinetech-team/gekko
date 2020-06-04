@@ -1,23 +1,28 @@
-<template lang='pug'>
-.grd-row-col-3-6
-  table.p1
-    tr
-      th amount of trades
-      td {{ report.trades }}
-    tr
-      th sharpe ratio
-      td {{ round2(report.sharpe) }}
-    tr
-      th start balance
-      td {{ round(report.startBalance) }} {{ report.currency }}
-    tr
-      th final balance
-      td {{ round(report.balance) }} {{ report.currency }}
-    tr
-      th simulated profit
-
-  .big.txt--right.price(:class='profitClass') {{ round(report.relativeProfit) }}%
-
+<template >
+  <div class="grd-row-col-3-6">
+    <table class="p1">
+      <tr>
+        <th>amount of trades</th>
+        <td>{{ report.trades }}</td>
+      </tr>
+      <tr>
+        <th>sharpe ratio</th>
+        <td>{{ round2(report.sharpe) }}</td>
+      </tr>
+      <tr>
+        <th>start balance</th>
+        <td>{{ round(report.startBalance) }} {{ report.currency }}</td>
+      </tr>
+      <tr>
+        <th>final balance</th>
+        <td>{{ round(report.balance) }} {{ report.currency }}</td>
+      </tr>
+      <tr>
+        <th>simulated profit</th>
+      </tr>
+    </table>
+    <div class="big txt--right price" :class="profitClass">{{ round(report.relativeProfit) }}%</div>
+  </div>
 </template>
 
 <script>

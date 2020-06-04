@@ -52,6 +52,7 @@ export default {
         this.openKeys = this.cachedOpenKeys
       }
     },
+    // eslint-disable-next-line space-before-function-paren
     $route: function () {
       this.updateMenu()
     }

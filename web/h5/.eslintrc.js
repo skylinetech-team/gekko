@@ -11,7 +11,6 @@ module.exports = {
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'generator-star-spacing': 'off',
-    'space-before-function-paren': 'off',
     'no-mixed-operators': 0,
     'vue/max-attributes-per-line': [
       2,
@@ -42,7 +41,7 @@ module.exports = {
         'allowTemplateLiterals': true
       }
     ],
-    // 'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': 'off',
     'semi': [
       2,
       'never',

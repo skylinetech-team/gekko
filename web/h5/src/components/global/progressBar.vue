@@ -1,10 +1,14 @@
 // http://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css
 
-<template lang='pug'>
-.progressbarWrapper(v-if='progress')
-  p <strong>{{ round(progress) }}%</strong>
-  .progressbar
-    div(:style='{width: progress + "%"}')
+<template >
+  <div class="progressbarWrapper" v-if="progress">
+    <p>
+      <strong>{{ round(progress) }}%</strong>
+    </p>
+    <div class="progressbar">
+      <div :style="{width: progress + '%'}"></div>
+    </div>
+  </div>
 </template>
 
 <script>

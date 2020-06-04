@@ -1,15 +1,24 @@
-<template lang='pug'>
-  div
-    h2.contain Backtest
-    .hr
-    config-builder(v-on:config='check')
-    div(v-if='backtestable')
-      .txt--center
-        a.w100--s.my1.btn--primary(href='#', v-if='backtestState !== "fetching"', v-on:click.prevent='run') Backtest
-        div(v-if='backtestState === "fetching"').scan-btn
-          p Running backtest..
-          spinner
-    result(v-if='backtestResult && backtestState === "fetched"', :result='backtestResult')
+<template >
+  <div>
+    <h2 class="contain">Backtest</h2>
+    <div class="hr"></div>
+    <config-builder v-on:config="check"></config-builder>
+    <div v-if="backtestable">
+      <div class="txt--center">
+        <a
+          class="w100--s my1 btn--primary"
+          href="#"
+          v-if="backtestState !== 'fetching'"
+          v-on:click.prevent="run"
+        >Backtest</a>
+        <div class="scan-btn" v-if="backtestState === 'fetching'">
+          <p>Running backtest..</p>
+          <spinner></spinner>
+        </div>
+      </div>
+    </div>
+    <result v-if="backtestResult && backtestState === 'fetched'" :result="backtestResult"></result>
+  </div>
 </template>
 
 <script>

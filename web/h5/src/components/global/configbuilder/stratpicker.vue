@@ -1,34 +1,53 @@
-<template lang='pug'>
-.grd
-  .grd-row
-    .grd-row-col-3-6.px1
-      h3 Strategy
-      div
-        label(for='strat').wrapper Strategy:
-        .custom-select.button
-          select(v-model='strategy')
-            option(v-for='strat in strategies') {{ strat.name }}
-      div
-        label(for='candleSize') Candle Size
-        .grd-row
-          .grd-row-col-3-6
-            input(v-model='rawCandleSize')
-          .grd-row-col-3-6.align
-            .custom-select.button
-              select(v-model='candleSizeUnit')
-                option minutes
-                option hours
-                option days
-      div
-        label(for='historySize') Warmup period (in {{ rawCandleSize }} {{ singularCandleSizeUnit }} candles):
-        input(v-model='historySize')
-        em.label-like (will use {{ humanizeDuration(candleSize * historySize * 1000 * 60) }} of data as history)
-    .grd-row-col-3-6.px1
-      div
-        h3 Parameters
-        p {{ strategy }} Parameters:
-        textarea.params(v-model='rawStratParams')
-        p.bg--red.p1(v-if='rawStratParamsError') {{ rawStratParamsError.message }}
+<template >
+  <div class="grd">
+    <div class="grd-row">
+      <div class="grd-row-col-3-6 px1">
+        <h3>Strategy</h3>
+        <div>
+          <label class="wrapper" for="strat">Strategy:</label>
+          <div class="custom-select button">
+            <select v-model="strategy">
+              <option v-for="strat in strategies" :key="strat">{{ strat.name }}</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="candleSize">Candle Size</label>
+          <div class="grd-row">
+            <div class="grd-row-col-3-6">
+              <input v-model="rawCandleSize" />
+            </div>
+            <div class="grd-row-col-3-6 align">
+              <div class="custom-select button">
+                <select v-model="candleSizeUnit">
+                  <option>minutes</option>
+                  <option>hours</option>
+                  <option>days</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            for="historySize"
+          >Warmup period (in {{ rawCandleSize }} {{ singularCandleSizeUnit }} candles):</label>
+          <input v-model="historySize" />
+          <em
+            class="label-like"
+          >(will use {{ humanizeDuration(candleSize * historySize * 1000 * 60) }} of data as history)</em>
+        </div>
+      </div>
+      <div class="grd-row-col-3-6 px1">
+        <div>
+          <h3>Parameters</h3>
+          <p>{{ strategy }} Parameters:</p>
+          <textarea class="params" v-model="rawStratParams"></textarea>
+          <p class="bg--red p1" v-if="rawStratParamsError">{{ rawStratParamsError.message }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

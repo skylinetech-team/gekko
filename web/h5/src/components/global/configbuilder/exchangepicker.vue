@@ -1,10 +1,14 @@
-<template lang='pug'>
-div
-  .mx1
-    label(for='exchange').wrapper Exchange:
-    .custom-select.button
-      select(v-model='exchange')
-        option(v-for='(market, e) in exchanges') {{ e }}
+<template >
+  <div>
+    <div class="mx1">
+      <label class="wrapper" for="exchange">Exchange:</label>
+      <div class="custom-select button">
+        <select v-model="exchange">
+          <option v-for="(market, e) in exchanges" :key="e">{{ e }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

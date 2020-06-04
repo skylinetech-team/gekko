@@ -1,30 +1,37 @@
-<template lang='pug'>
-div.contain
-
-  .grd-row.summary
-    .grd-row-col-3-6
-      table.p1
-        tr
-          th start time
-          td {{ report.startTime }}
-        tr
-          th end time
-          td {{ report.endTime }}
-        tr
-          th timespan
-          td {{ report.timespan }}
-        tr
-          th start price
-          td {{ round(report.startPrice) }} {{ report.currency }}
-        tr
-          th end price
-          td {{ round(report.endPrice) }} {{ report.currency }}
-        tr
-          th market
-          td {{ round(report.market) }}%
-
-    paperTradeSummary(:report='report')
-
+<template >
+  <div class="contain">
+    <div class="grd-row summary">
+      <div class="grd-row-col-3-6">
+        <table class="p1">
+          <tr>
+            <th>start time</th>
+            <td>{{ report.startTime }}</td>
+          </tr>
+          <tr>
+            <th>end time</th>
+            <td>{{ report.endTime }}</td>
+          </tr>
+          <tr>
+            <th>timespan</th>
+            <td>{{ report.timespan }}</td>
+          </tr>
+          <tr>
+            <th>start price</th>
+            <td>{{ round(report.startPrice) }} {{ report.currency }}</td>
+          </tr>
+          <tr>
+            <th>end price</th>
+            <td>{{ round(report.endPrice) }} {{ report.currency }}</td>
+          </tr>
+          <tr>
+            <th>market</th>
+            <td>{{ round(report.market) }}%</td>
+          </tr>
+        </table>
+      </div>
+      <paper-trade-summary :report="report"></paper-trade-summary>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -24,6 +24,7 @@ export function handleScrollHeader(callback) {
   let timer = 0
 
   let beforeScrollTop = window.pageYOffset
+  // eslint-disable-next-line space-before-function-paren
   callback = callback || function () { }
   window.addEventListener(
     'scroll',

@@ -1,38 +1,59 @@
-<template lang='pug'>
-div
-  h3 Daterange
-  template(v-if='tab === "scan"')
-    .txt--center(v-if='!scanned')
-      a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') Scan available data
-    .txt--center(v-if='scanned == "fetching"')
-      p.scan-btn Scanning..
-    template(v-if='scanned == true')
-      template(v-if='ranges.length === 0')
-        p
-          strong Unable to find any local data, do you have local data available for
-            | "{{ config.watch.exchange }}:{{ config.watch.currency }}/{{ config.watch.asset }}"?
-      template(v-else)
-        label(for='exchange').wrapper Run simulation over:
-        form.radio.grd
-          div.grd-row(v-for='(range, i) in ranges').m1
-            input.grd-row-col-1-6(type='radio', :value='i', v-model='selectedRangeIndex')
-            label.grd-row-col-5-6(:for='i') {{ printRange(range) }}
-      p
-        em
-          a(href='#', v-on:click.prevent='scan') rescan
-    p.txt--center
-      em
-        a(href='#', v-on:click.prevent='tab = "manual"') Or manually set a daterange
-  template(v-if='tab === "manual"')
-    div
-      label(for='from') From:
-      input(v-model='from')
-    div
-      label(for='to') To:
-      input(v-model='to')
-    p.txt--center
-    em
-      a(href='#', v-on:click.prevent='tab = "scan"') Or scan for a daterange
+<template >
+  <div>
+    <h3>Daterange</h3>
+    <template v-if="tab === 'scan'">
+      <div class="txt--center" v-if="!scanned">
+        <a
+          class="w100--s btn--primary scan-btn"
+          href="#"
+          v-on:click.prevent="scan"
+        >Scan available data</a>
+      </div>
+      <div class="txt--center" v-if="scanned == 'fetching'">
+        <p class="scan-btn">Scanning..</p>
+      </div>
+      <template v-if="scanned == true">
+        <template v-if="ranges.length === 0">
+          <p>
+            <strong>Unable to find any local data, do you have local data available for"{{ config.watch.exchange }}:{{ config.watch.currency }}/{{ config.watch.asset }}"?</strong>
+          </p>
+        </template>
+        <template v-else>
+          <label class="wrapper" for="exchange">Run simulation over:</label>
+          <form class="radio grd">
+            <div class="grd-row m1" v-for="(range, i) in ranges" :key="i">
+              <input class="grd-row-col-1-6" type="radio" :value="i" v-model="selectedRangeIndex" />
+              <label class="grd-row-col-5-6" :for="i">{{ printRange(range) }}</label>
+            </div>
+          </form>
+        </template>
+        <p>
+          <em>
+            <a href="#" v-on:click.prevent="scan">rescan</a>
+          </em>
+        </p>
+      </template>
+      <p class="txt--center">
+        <em>
+          <a href="#" v-on:click.prevent="tab = 'manual'">Or manually set a daterange</a>
+        </em>
+      </p>
+    </template>
+    <template v-if="tab === 'manual'">
+      <div>
+        <label for="from">From:</label>
+        <input v-model="from" />
+      </div>
+      <div>
+        <label for="to">To:</label>
+        <input v-model="to" />
+      </div>
+      <p class="txt--center"></p>
+      <em>
+        <a href="#" v-on:click.prevent="tab = 'scan'">Or scan for a daterange</a>
+      </em>
+    </template>
+  </div>
 </template>
 
 <script>

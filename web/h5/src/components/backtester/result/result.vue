@@ -1,13 +1,15 @@
-<template lang='pug'>
-  div
-    .hr.contain
-    div.contain
-      h3 Backtest result
-    result-summary(:report='result.performanceReport')
-    .hr.contain
-    chart(:data='candles', height='500')
-    .hr.contain
-    roundtripTable(:roundtrips='result.roundtrips')
+<template>
+  <div>
+    <div class="hr contain"></div>
+    <div class="contain">
+      <h3>Backtest result</h3>
+    </div>
+    <result-summary :report="result.performanceReport"></result-summary>
+    <div class="hr contain"></div>
+    <chart :data="candles" height="500"></chart>
+    <div class="hr contain"></div>
+    <roundtrip-table :roundtrips="result.roundtrips"></roundtrip-table>
+  </div>
 </template>
 
 <script>

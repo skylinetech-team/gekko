@@ -1,12 +1,15 @@
-<template lang='pug'>
-div
-  h3 Daterange
-  div
-    label(for='from') From
-    input(v-model='from')
-  div
-    label(for='to') To
-    input(v-model='to')
+<template >
+  <div>
+    <h3>Daterange</h3>
+    <div>
+      <label for="from">From</label>
+      <input v-model="from" />
+    </div>
+    <div>
+      <label for="to">To</label>
+      <input v-model="to" />
+    </div>
+  </div>
 </template>
 
 <script>
