@@ -51,11 +51,6 @@ const vueConfig = {
     config.resolve.alias
       .set('@$', resolve('src'))
 
-    config.module.rule('pug')
-      .test(/\.pug$/)
-      .use('pug-html-loader')
-      .loader('pug-html-loader')
-      .end()
 
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
