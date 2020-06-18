@@ -2,7 +2,7 @@
   <div>
     <h3>Type</h3>
     <template>
-      <label class="wrapper" for="type">What do you want to do with gekko?</label>
+      <label class="wrapper" for="type">What do you want to do with tradebot?</label>
       <form class="radio grd">
         <div class="grd-row m1" v-for="(type, i) in types" :key="i">
           <input class="grd-row-col-1-6" type="radio" :value="i" v-model="selectedTypeIndex" />

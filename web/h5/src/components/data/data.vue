@@ -74,7 +74,7 @@ import dataset from '../global/mixins/dataset'
 // global humanizeDuration
 
 const intro = `
-Gekko needs local market data in order to backtest strategies. The local
+Tradebot needs local market data in order to backtest strategies. The local
 data can also be used in a warmup period when running a strategy against a
 live market.
 `

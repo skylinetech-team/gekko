@@ -1,4 +1,4 @@
-var UIconfig = require('../vue/dist/UIconfig');
+var UIconfig = require('../h5/dist/UIconfig');
 
 var config = {};
 
@@ -53,7 +53,7 @@ config.sqlite = {
   }]
 }
 
-  // Postgres adapter example config (please note: requires postgres >= 9.5):
+// Postgres adapter example config (please note: requires postgres >= 9.5):
 config.postgresql = {
   path: 'plugins/postgresql',
   version: 0.1,
@@ -70,7 +70,7 @@ config.postgresql = {
 config.mongodb = {
   path: 'plugins/mongodb',
   version: 0.1,
-  connectionString: 'mongodb://mongodb/gekko', // connection to mongodb server
+  connectionString: 'mongodb://118.31.5.79:27017/gekko', // connection to mongodb server
   dependencies: [{
     module: 'mongojs',
     version: '2.4.0'

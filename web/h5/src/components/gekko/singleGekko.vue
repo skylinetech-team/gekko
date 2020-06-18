@@ -1,19 +1,19 @@
 <template >
   <div class="my2">
     <div class="contain" v-if="!data">
-      <h1>Unknown Gekko instance</h1>
-      <p>Gekko doesn't know what gekko this is...</p>
+      <h1>Unknown Tradebot instance</h1>
+      <p>Tradebot doesn't know what tradebot this is...</p>
     </div>
     <div v-if="data">
-      <h2 class="contain">Gekko {{ type }}</h2>
+      <h2 class="contain">Tradebot {{ type }}</h2>
       <div
         class="contain brdr--mid-gray p1 bg--orange"
         v-if="isArchived"
-      >This is an archived Gekko, it is currently not running anymore.</div>
+      >This is an archived Tradebot, it is currently not running anymore.</div>
       <div
         class="contain brdr--mid-gray p1 bg--orange"
         v-if="data.errorMessage"
-      >This is Gekko crashed with the following error: {{ data.errorMessage }}</div>
+      >This is Tradebot crashed with the following error: {{ data.errorMessage }}</div>
       <div class="grd contain">
         <div class="grd-row">
           <div class="grd-row-col-3-6">
@@ -89,7 +89,7 @@
             <h3>Profit report</h3>
             <template v-if="!report">
               <p>
-                <em v-if="isArchived">This Gekko never executed a trade..</em>
+                <em v-if="isArchived">This Tradebot never executed a trade..</em>
                 <em v-if="!isArchived">Waiting for at least one trade..</em>
               </p>
             </template>
@@ -122,20 +122,20 @@
           </div>
         </div>
         <p v-if="isStratrunner && !watcher && !isArchived">
-          WARNING: stale gekko, not attached to a watcher, please report
+          WARNING: stale Tradebot, not attached to a watcher, please report
           <a
             href="https://github.com/askmike/gekko/issues"
           >here</a>.
         </p>
         <p v-if="!isArchived">
-          <a class="w100--s my1 btn--red" v-on:click="stopGekko">Stop Gekko</a>
+          <a class="w100--s my1 btn--red" v-on:click="stopGekko">Stop Tradebot</a>
         </p>
         <p v-if="isArchived">
-          <a class="w100--s my1 btn--red" v-on:click="deleteGekko">Delete Gekko</a>
+          <a class="w100--s my1 btn--red" v-on:click="deleteGekko">Delete Tradebot</a>
         </p>
         <p v-if="isStratrunner && watcher && !isArchived">
           <em>
-            This gekko gets market data from
+            This tradebot gets market data from
             <router-link :to="'/live-gekkos/' + watcher.id">this market watcher</router-link>
           </em>.
         </p>
@@ -376,10 +376,10 @@ export default {
     },
     stopGekko: function() {
       if (this.hasLeechers) {
-        return alert('This Gekko is fetching market data for multiple stratrunners, stop these first.')
+        return alert('This Tradebot is fetching market data for multiple stratrunners, stop these first.')
       }
 
-      if (!confirm('Are you sure you want to stop this Gekko?')) {
+      if (!confirm('Are you sure you want to stop this Tradebot?')) {
         return
       }
       axios({
@@ -387,15 +387,15 @@ export default {
         method: 'post',
         data: { id: this.data.id }
       }).then(res => {
-        console.log('stopped gekko')
+        console.log('stopped Tradebot')
       })
     },
     deleteGekko: function() {
       if (!this.isArchived) {
-        return alert('This Gekko is still running, stop it first!')
+        return alert('This Tradebot is still running, stop it first!')
       }
 
-      if (!confirm('Are you sure you want to delete this Gekko?')) {
+      if (!confirm('Are you sure you want to delete this Tradebot?')) {
         return
       }
       axios({

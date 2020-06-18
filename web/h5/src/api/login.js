@@ -76,3 +76,27 @@ export function get2step(parameter) {
     data: parameter
   })
 }
+
+export function validateSms(parameter) {
+  return axios({
+    url: api.ValidateSms,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function resetPassword(parameter) {
+  return axios({
+    url: api.ResetPassword,
+    method: 'post',
+    data: parameter
+  })
+}
+
+export function register(parameter) {
+  return axios({
+    url: api.Register,
+    method: 'post',
+    data: parameter
+  })
+}

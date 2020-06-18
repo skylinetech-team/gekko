@@ -3,7 +3,7 @@
     <div class="copyright">
       Copyright
       <a-icon type="copyright" />2020
-      <span>skyline tech team shanghai</span>
+      <span>Skyline Technology USA LLC</span>
     </div>
   </div>
 </template>

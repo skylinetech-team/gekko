@@ -2,7 +2,7 @@
   <div class="my2">
     <div class="contain" v-if="!data">
       <h1>Unknown Watcher</h1>
-      <p>Gekko doesn't know what whatcher this is...</p>
+      <p>Tradebot doesn't know what whatcher this is...</p>
     </div>
     <div v-if="data">
       <h2 class="contain">Market Watcher</h2>

@@ -12,7 +12,7 @@
         :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
         @change="handleTabClick"
       >
-        <a-tab-pane key="tab1" tab="Password Login">
+        <a-tab-pane key="tab1" tab="Login">
           <a-alert
             v-if="isLoginError"
             type="error"
@@ -49,13 +49,13 @@
             </a-input>
           </a-form-item>
         </a-tab-pane>
-        <a-tab-pane key="tab2" tab="Email Login">
+        <a-tab-pane key="tab2" tab="Forgot Pass">
           <a-form-item>
             <a-input
               size="large"
               type="text"
               placeholder="Email"
-              v-decorator="['mobile', {rules: [{ required: true, pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message: 'please correct email' }], validateTrigger: 'change'}]"
+              v-decorator="['email', {rules: [{ required: true, pattern: /^[.a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message: 'please correct email' }], validateTrigger: 'change'}]"
             >
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
             </a-input>
@@ -84,16 +84,26 @@
               ></a-button>
             </a-col>
           </a-row>
+          <a-form-item>
+            <a-input
+              size="large"
+              type="text"
+              placeholder="New Password"
+              v-decorator="['password', {rules: [{ required: true, message: 'please enter new password' }], validateTrigger: 'change'}]"
+            >
+              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
+            </a-input>
+          </a-form-item>
         </a-tab-pane>
       </a-tabs>
 
       <a-form-item>
         <a-checkbox v-decorator="['rememberMe']">Auto Login</a-checkbox>
-        <router-link
+        <!-- <router-link
           :to="{ name: 'recover', params: { user: 'aaa'} }"
           class="forge-password"
           style="float: right;"
-        >Forget Password</router-link>
+        >Forget Password</router-link>-->
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
@@ -136,7 +146,7 @@
 import TwoStepCaptcha from '@/components/tools/TwoStepCaptcha'
 import { mapActions } from 'vuex'
 import { timeFix } from '@/utils/util'
-import { getSmsCaptcha, get2step } from '@/api/login'
+import { getSmsCaptcha, validateSms, resetPassword } from '@/api/login'
 
 export default {
   components: {
@@ -162,14 +172,14 @@ export default {
     }
   },
   created() {
-    get2step({})
-      .then(res => {
-        this.requiredTwoStepCaptcha = res.result.stepCode
-      })
-      .catch(() => {
-        this.requiredTwoStepCaptcha = false
-      })
-    // this.requiredTwoStepCaptcha = true
+    // get2step({})
+    //   .then(res => {
+    //     this.requiredTwoStepCaptcha = res.result.stepCode
+    //   })
+    //   .catch(() => {
+    //     this.requiredTwoStepCaptcha = false
+    //   })
+    this.requiredTwoStepCaptcha = true
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
@@ -199,20 +209,44 @@ export default {
 
       state.loginBtn = true
 
-      const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
+      const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['email', 'captcha', 'password']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
           const loginParams = { ...values }
           delete loginParams.username
-          loginParams[!state.loginType ? 'email' : 'email'] = values.username
+          loginParams.email = values.username
           loginParams.password = values.password
-          Login(loginParams)
-            .then(res => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
-            .finally(() => {
-              state.loginBtn = false
+
+          if (customActiveKey === 'tab1') {
+            Login(loginParams)
+              .then(res => this.loginSuccess(res))
+              .catch(err => this.requestFailed(err))
+              .finally(() => {
+                state.loginBtn = false
+              })
+          } else {
+            loginParams.email = values.email
+            validateSms({ email: loginParams.email, passCode: loginParams.captcha }).then(res => {
+              if (res.code === 200) {
+                resetPassword({
+                  email: loginParams.email,
+                  personalId: '',
+                  password: loginParams.password
+                }).then(res => {
+                  if (res.code === 200) {
+                    Login(loginParams)
+                      .then(res => this.loginSuccess(res))
+                      .catch(err => this.requestFailed(err))
+                      .finally(() => {
+                        state.loginBtn = false
+                      })
+                  }
+                })
+              }
             })
+            // verification => update password => login
+          }
         } else {
           setTimeout(() => {
             state.loginBtn = false
@@ -227,7 +261,7 @@ export default {
         state
       } = this
 
-      validateFields(['mobile'], { force: true }, (err, values) => {
+      validateFields(['email'], { force: true }, (err, values) => {
         if (!err) {
           state.smsSendBtn = true
 
@@ -240,14 +274,15 @@ export default {
           }, 1000)
 
           const hide = this.$message.loading('pass code sending..', 0)
-          getSmsCaptcha({ mobile: values.mobile })
+          getSmsCaptcha({ email: values.email })
             .then(res => {
+              console.log(res)
               setTimeout(hide, 2500)
-              this.$notification['success']({
-                message: '提示',
-                description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                duration: 8
-              })
+              // this.$notification['success']({
+              //   message: '提示',
+              //   description: '验证码获取成功，您的验证码为：' + res.result.passCode,
+              //   duration: 8
+              // })
             })
             .catch(err => {
               setTimeout(hide, 1)
@@ -270,19 +305,7 @@ export default {
     },
     loginSuccess(res) {
       console.log(res)
-      // check res.homePage define, set $router.push name res.homePage
-      // Why not enter onComplete
-      /*
-      this.$router.push({ name: 'analysis' }, () => {
-        console.log('onComplete')
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      })
-      */
       this.$router.push({ path: '/' })
-      // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
           message: 'welcome',
@@ -295,7 +318,7 @@ export default {
       this.isLoginError = true
       this.$notification['error']({
         message: 'Error',
-        description: ((err.response || {}).data || {}).message || 'request error,please try later',
+        description: ((err.response || {}).data || {}).message || 'login fail,please try later',
         duration: 4
       })
     }

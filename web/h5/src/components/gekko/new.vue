@@ -1,6 +1,6 @@
 <template >
   <div class="contain my2">
-    <h3>Start a new gekko</h3>
+    <h3>Start a new Tradebot</h3>
     <gekko-config-builder v-on:config="updateConfig"></gekko-config-builder>
     <div class="hr"></div>
     <div class="txt--center" v-if="config.valid">

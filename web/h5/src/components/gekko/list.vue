@@ -93,8 +93,8 @@
       </tbody>
     </table>
     <div class="hr"></div>
-    <h2>Start a new live Gekko</h2>
-    <router-link class="btn--primary" to="/live-gekkos/new">Start a new live Gekko!</router-link>
+    <h2>Start a new live Tradebot</h2>
+    <router-link class="btn--primary" to="/live-gekkos/new">Start a new live Tradebot!</router-link>
   </div>
 </template>
 

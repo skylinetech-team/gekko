@@ -19,7 +19,7 @@
           <a href="_self">隐私</a>
           <a href="_self">条款</a>
         </div>-->
-        <div class="copyright">Copyright &copy; 2019 skyline teach team</div>
+        <div class="copyright">&copy;Copyright 2020 Skyline Technology USA LLC</div>
       </div>
     </div>
   </div>

@@ -6,48 +6,48 @@ const cors = require('koa-cors');
 const _ = require('lodash');
 const bodyParser = require('koa-bodyparser');
 
-const fs = require('fs');
-const path = require('path');
-const mongoose = require('mongoose');
-const db = 'mongodb://118.31.5.79:27017/smart';
-mongoose.Promise = require('bluebird');
-mongoose.connect(db, {
-  useMongoClient: true,
-  /* other options */
-});
+// const fs = require('fs');
+// const path = require('path');
+// const mongoose = require('mongoose');
+// const db = 'mongodb://118.31.5.79:27017/smart';
+// mongoose.Promise = require('bluebird');
+// mongoose.connect(db, {
+//   useMongoClient: true,
+//   /* other options */
+// });
 
 /**
  * get db js
  * @type {[type]}
  */
-const models_path = path.join(__dirname, '/app/models');
+// const models_path = path.join(__dirname, '/app/models');
 
 /**
  * get model js
  * @param  {[type]} modelPath [description]
  * @return {[type]}           [description]
  */
-function walk(modelPath) {
-  fs.readdirSync(modelPath)
-    .forEach((file) => {
-      const filePath = path.join(modelPath, `/${file}`);
-      const stat = fs.statSync(filePath);
-      if (stat.isFile()) {
-        if (/(.*)\.(js|coffee)/.test(file)) {
-          require(filePath);
-        }
-      } else if (stat.isDirectory()) {
-        walk(filePath);
-      }
-    });
-}
-walk(models_path);
+// function walk(modelPath) {
+//   fs.readdirSync(modelPath)
+//     .forEach((file) => {
+//       const filePath = path.join(modelPath, `/${file}`);
+//       const stat = fs.statSync(filePath);
+//       if (stat.isFile()) {
+//         if (/(.*)\.(js|coffee)/.test(file)) {
+//           require(filePath);
+//         }
+//       } else if (stat.isDirectory()) {
+//         walk(filePath);
+//       }
+//     });
+// }
+// walk(models_path);
+// const router = require('./app/router');
 
 const opn = require('opn');
 const server = require('http').createServer();
-// const router = require('koa-router')();
+const router = require('koa-router')();
 
-const router = require('./app/router');
 
 const ws = require('ws');
 const app = koa();
@@ -124,6 +124,15 @@ router.get('/api/strategies', require(ROUTE('strategies')));
 router.get('/api/configPart/:part', require(ROUTE('configPart')));
 router.get('/api/apiKeys', apiKeys.get);
 
+const userContraller = require('./agent/aws')
+router.post('/api/user/signup', userContraller.signup);
+router.get('/api/user/getUser', userContraller.getUser);
+router.post('/api/user/register', userContraller.register);
+router.post('/api/user/resetpassword', userContraller.resetpassword);
+router.post('/api/user/saveprofile', userContraller.saveprofile);
+router.post('/api/user/validate', userContraller.validate);
+router.post('/api/user/verification', userContraller.verification);
+
 const listWraper = require(ROUTE('list'));
 router.get('/api/imports', listWraper('imports'));
 router.get('/api/gekkos', listWraper('gekkos'));
@@ -140,13 +149,11 @@ router.post('/api/stopGekko', require(ROUTE('stopGekko')));
 router.post('/api/deleteGekko', require(ROUTE('deleteGekko')));
 router.post('/api/getCandles', require(ROUTE('getCandles')));
 
-//const { historyApiFallback } = require('koa-connect-history-api-fallback')
 // incoming WS:
 // wss.on('connection', ws => {
 //   ws.on('message', _.noop);
 // });
 
-//app.use(historyApiFallback({ whiteList: ['/api'] }))
 app
   .use(cors())
   .use(serve(WEBROOT + 'h5/dist'))

@@ -12,6 +12,31 @@
           v-decorator="['email', {rules: [{ required: true, type: 'email', message: 'please input email' }], validateTrigger: ['change', 'blur']}]"
         ></a-input>
       </a-form-item>
+      <a-form-item>
+        <a-input
+          size="large"
+          type="text"
+          placeholder="First Name"
+          v-decorator="['firstName', {rules: [{ required: true, message: 'please input' }], validateTrigger: ['change', 'blur']}]"
+        ></a-input>
+      </a-form-item>
+      <a-form-item>
+        <a-input
+          size="large"
+          type="text"
+          placeholder="Last Name"
+          v-decorator="['lastName', {rules: [{ required: true, message: 'please input' }], validateTrigger: ['change', 'blur']}]"
+        ></a-input>
+      </a-form-item>
+
+      <a-form-item>
+        <a-input
+          size="large"
+          type="text"
+          placeholder="Phone"
+          v-decorator="['phone', {rules: [{ required: true, message: 'please input' }], validateTrigger: ['change', 'blur']}]"
+        ></a-input>
+      </a-form-item>
 
       <a-popover
         placement="rightTop"
@@ -119,8 +144,8 @@
 
 <script>
 import { mixinDevice } from '@/utils/mixin.js'
-import { getSmsCaptcha } from '@/api/login'
-
+import { getSmsCaptcha, register } from '@/api/login'
+import { mapActions } from 'vuex'
 const levelNames = {
   0: 'low',
   1: 'low',
@@ -139,6 +164,7 @@ const levelColor = {
   2: '#ff7e05',
   3: '#52c41a'
 }
+
 export default {
   name: 'Register',
   components: {},
@@ -170,6 +196,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['Login']),
     handlePasswordLevel(rule, value, callback) {
       let level = 0
 
@@ -232,12 +259,42 @@ export default {
       const {
         form: { validateFields },
         state,
+        Login,
         $router
       } = this
       validateFields({ force: true }, (err, values) => {
         if (!err) {
           state.passwordLevelChecked = false
-          $router.push({ name: 'registerResult', params: { ...values } })
+          register(values)
+            .then(res => {
+              if (res.code === 200) {
+                const loginParams = { email: values.email, password: values.password }
+
+                Login(loginParams)
+                  .then(res => $router.push({ path: '/' }))
+                  .catch(err => {
+                    this.$notification['error']({
+                      message: 'Error',
+                      description: err.response || 'login fail,please try later',
+                      duration: 4
+                    })
+                  })
+              } else {
+                this.$notification['error']({
+                  message: 'Error',
+                  description: err.response || 'rigister fail,please contact skyline tech',
+                  duration: 4
+                })
+              }
+            })
+            .catch(err => {
+              this.$notification['error']({
+                message: 'Error',
+                description: err.response || 'register fail,please try later',
+                duration: 4
+              })
+            })
+          // $router.push({ name: 'registerResult', params: { ...values } })
         }
       })
     },
@@ -247,11 +304,10 @@ export default {
       const {
         form: { validateFields },
         state,
-        $message,
-        $notification
+        $message
       } = this
 
-      validateFields(['mobile'], { force: true }, (err, values) => {
+      validateFields(['email'], { force: true }, (err, values) => {
         if (!err) {
           state.smsSendBtn = true
 
@@ -265,14 +321,14 @@ export default {
 
           const hide = $message.loading('pass code sending..', 0)
 
-          getSmsCaptcha({ mobile: values.mobile })
+          getSmsCaptcha({ email: values.email })
             .then(res => {
               setTimeout(hide, 2500)
-              $notification['success']({
-                message: 'Warning',
-                description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                duration: 8
-              })
+              // $notification['success']({
+              //   message: 'Warning',
+              //   description: '验证码获取成功，您的验证码为：' + res.result.captcha,
+              //   duration: 8
+              // })
             })
             .catch(err => {
               setTimeout(hide, 1)
@@ -287,7 +343,7 @@ export default {
     requestFailed(err) {
       this.$notification['error']({
         message: 'Error',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
+        description: ((err.response || {}).data || {}).message || 'please retry',
         duration: 4
       })
       this.registerBtn = false
